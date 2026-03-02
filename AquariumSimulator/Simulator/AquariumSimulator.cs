@@ -52,7 +52,7 @@ public sealed class AquariumSimulator : BackgroundService
         foreach (var aquariumId in _aquariumOptions.AquariumIds)
         {
             var workerLogger = _loggerFactory.CreateLogger<AquariumWorker>();
-            var topic = $"{_simulatorOptions.MqttTopic.TrimEnd('/')}/{aquariumId:D}";
+            var topic = $"{_simulatorOptions.MqttTopic.TrimEnd('/')}/{aquariumId:D}/measurements";
             var worker = new AquariumWorker(aquariumId, topic, _publisher, _encoder, _payloadOptions, workerLogger);
             tasks.Add(worker.RunAsync(stoppingToken));
         }
