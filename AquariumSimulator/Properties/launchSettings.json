@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "AquariumSimulator": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

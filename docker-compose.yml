@@ -1,0 +1,28 @@
+services:
+  mqtt:
+    image: eclipse-mosquitto:2
+    container_name: aquarium-mqtt
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+    volumes:
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_log:/mosquitto/log
+
+  simulator:
+    image: thomasschirgi/aquariumsimulator:2026-03-04
+    container_name: aquarium-simulator
+    restart: unless-stopped
+    depends_on:
+      - mqtt
+    volumes:
+      - ./AquariumSimulator/appsettings.json:/app/appsettings.json:ro
+    environment:
+      Simulator__MqttHost: mqtt
+      Simulator__MqttPort: 1883
+      Simulator__MqttTopic: aquariums
+      Simulator__ClientId: aquarium-simulator
+
+volumes:
+  mosquitto_data:
+  mosquitto_log:
